@@ -1,0 +1,53 @@
+<% include ./partials/header.ejs %>
+
+
+  <main class="container mx-auto px-4 mt-8">
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="bg-white shadow-md rounded-md p-4">
+        <h2 class="text-xl font-bold mb-2">Account Information</h2>
+        <ul class="list-disc ml-4">
+          <li>Username: <%= user.username %></li>
+          <li>Email: <%= user.email %></li>
+          <li>Joined: <%= user.contact %></li>
+        </ul>
+      </div>
+      <!-- //Profile Image form -->
+      <form hidden id="uploadform" action="/fileupload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image">
+        <!-- <button type="submit">Upload</button> -->
+      </form>
+
+      <div class="bg-white shadow-md rounded-md p-4">
+        <h2 class="text-xl font-bold mb-2">Profile Picture</h2>
+        <img src="/images/uploads/<%= user.profileImage %>"
+         alt="Profile Picture" class="w-32 h-32 rounded-full mx-auto object-cover relative">
+        <button id="uploadimage" class="mt-4 bg-blue-500 text-white py-2 px-3 rounded-full absolute sm:absolute  sm:left-[52%] sm:top-[42%]  md:absolute md:left-[76%] md:top-[25%]  lg:left-[76%] lg:top-[30%] hover:bg-blue-700">
+            <i class="fa-solid fa-pen"></i>
+        </button>
+        <div class="button w-full">
+        <button class="bg-red-700 text-white ml-[45%] sm:ml-[42%] mt-3 px-4 py-2 rounded"><a href="/add" class="no-underline text-white">New Post</a></button>
+      </div>
+      </div>
+    </section>
+    <section class="mt-8">
+      <h2 class="text-xl font-bold mb-2">Your Boards</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+        <div class="bg-white shadow-md rounded-md p-4">
+          <h3 class="text-lg font-bold mb-2">Your Posts</h3>
+          <img src="/images/uploads/<%= user?.posts[0]?.postimage %>" alt="Board Image 1" class="w-full h-48 object-cover rounded-t-md">
+          <a href="/show/posts" class="mt-2 text-xl text-gray-600">See All your Pins</a>
+          <p class="mt-2 text-gray-600"><%= user.posts.length %></p>
+        </div>
+     
+    </section>
+
+        <script>
+            document.querySelector("#uploadimage").addEventListener("click",()=>{
+                document.querySelector("#uploadform input").click();
+            });
+            document.querySelector("#uploadform input").addEventListener("change",()=>{
+                document.querySelector("#uploadform").submit();
+            });
+        </script>
+<% include ./partials/footer.ejs %>
